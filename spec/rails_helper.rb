@@ -8,9 +8,9 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner'
 
-# Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-require './spec/support/request_spec_helper.rb'
-require './spec/support/factory_bot.rb'
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+# require './spec/support/request_spec_helper.rb'
+# require './spec/support/factory_bot.rb'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -32,7 +32,10 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 
-  config.include RequestSpecHelper, type: :request
+  # config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  config.include ControllerSpecHelper
+
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -77,7 +80,7 @@ RSpec.configuration do |config|
   # [...]
   # add `FactoryBot` methods
   # config.include FactoryGirl::Syntax::Methods
-  config.include RequestSpecHelper, type: :request
+  # config.include RequestSpecHelper, type: :request
   # start by truncating all the tables but then use the faster transaction strategy the rest of the time.
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
